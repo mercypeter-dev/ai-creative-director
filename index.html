@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="AI Creative Director — Transform rough ideas into polished creative concepts, visual direction, budgets, and step-by-step execution plans powered by AI." />
+  <title>AI Creative Director — Bespoke Experience &amp; Creative Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner container">
+      <a href="#" class="brand" id="brand-link" onclick="showPage('home'); return false;">
+        <span class="brand-icon">✦</span>
+        <div class="brand-text-group">
+          <span class="brand-name">AI Creative Director</span>
+          <span class="brand-edition">STUDIO EDITION</span>
+        </div>
+      </a>
+      <nav class="header-nav" aria-label="Primary navigation">
+        <button class="btn-ghost" id="nav-new-project" onclick="showPage('home')" style="display:none">
+          <span>✦ New Project</span>
+        </button>
+        <button class="btn-icon" id="settings-btn" onclick="toggleSettings()" aria-label="API settings"
+          title="Configure API Key">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+            <path d="M12 2v2m0 16v2M2 12h2m16 0h2" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SETTINGS OVERLAY -->
+  <div class="settings-overlay" id="settings-overlay" onclick="toggleSettings()"></div>
+  <div class="settings-panel" id="settings-panel" role="dialog" aria-label="API Settings">
+    <div class="settings-header">
+      <div>
+        <div class="panel-pretitle">STUDIO CONFIGURATION</div>
+        <h2 class="settings-title">API Connection</h2>
+      </div>
+      <button class="btn-icon" onclick="toggleSettings()" aria-label="Close settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="settings-body">
+      <p class="settings-description">AI Creative Director connects directly with Google (Gemini) or Anthropic (Claude) to generate bespoke concepts. Your key remains stored privately in your browser.</p>
+      
+      <div class="form-group">
+        <label class="form-label" for="api-key-input">API Key (Gemini or Anthropic)</label>
+        <div class="input-with-toggle">
+          <input type="password" id="api-key-input" class="form-input" placeholder="Paste Gemini key (starts with AIza or AQ...) or Claude key..." autocomplete="off" />
+          <button class="btn-icon input-toggle" onclick="toggleApiKeyVisibility()" aria-label="Toggle visibility">
+            <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button class="btn-primary" onclick="saveApiKey()">Save &amp; Verify Key</button>
+        <button class="btn-secondary" onclick="testCurrentApiKey()">Test Key</button>
+        <button class="btn-ghost" onclick="clearApiKey()">Clear</button>
+      </div>
+
+      <div class="api-status" id="api-status"></div>
+
+      <div class="settings-help">
+        <p class="help-title">✦ Where to get an API key:</p>
+        <ol class="help-steps">
+          <li><strong>Google (Gemini — Free, Recommended):</strong> Get your free key at <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com</a> (starts with <code>AIza</code> or <code>AQ</code>). No payment or credit card required!</li>
+          <li><strong>Anthropic (Claude):</strong> Get your key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> (starts with <code>sk-ant-</code>). <em>Requires prepaid credits in your Anthropic account.</em></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: HOME -->
+  <main id="page-home" class="page page-active">
+    
+    <!-- EDITORIAL HERO SECTION -->
+    <section class="hero" id="hero-section" aria-labelledby="hero-headline">
+      <div class="container hero-layout">
+        <div class="hero-text-side">
+          <div class="hero-badge">✦ AI-Powered Creative Planning</div>
+          <h1 class="hero-headline" id="hero-headline">
+            Turn Your Ideas Into<br />
+            <em class="hero-highlight">Unforgettable Experiences</em>
+          </h1>
+          <p class="hero-subtext">Describe your vision. Our AI Creative Director transforms it into a complete creative
+            concept — with mood, visual direction, budget breakdown, and a step-by-step execution plan.</p>
+          
+          <div class="hero-cta-row">
+            <a href="#form-heading" class="btn-start-creating" onclick="scrollToBrief(event)">
+              <span class="btn-start-text">Start Creating</span>
+              <span class="btn-start-icon">↓</span>
+            </a>
+            <button type="button" class="btn-sample-demo" onclick="loadSampleConcept()" title="Instantly view a complete bespoke creative dossier without needing an API key">
+              <span class="pill-sparkle">✦</span>
+              <span>Explore Sample Concept</span>
+            </button>
+          </div>
+
+          <!-- Editorial Feature Highlights -->
+          <div class="hero-features-bar">
+            <div class="hero-feature-item">
+              <span class="feature-num">01</span>
+              <div class="feature-content">
+                <span class="feature-title">Atmospheric Mood</span>
+                <span class="feature-sub">Sensory &amp; visual direction</span>
+              </div>
+            </div>
+            <div class="hero-feature-item">
+              <span class="feature-num">02</span>
+              <div class="feature-content">
+                <span class="feature-title">Itemized Budget</span>
+                <span class="feature-sub">Calculated costs &amp; vendors</span>
+              </div>
+            </div>
+            <div class="hero-feature-item">
+              <span class="feature-num">03</span>
+              <div class="feature-content">
+                <span class="feature-title">Timeline Milestones</span>
+                <span class="feature-sub">Step-by-step execution</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-side" aria-hidden="true">
+          <div class="editorial-card-frame">
+            <div class="editorial-card-header">
+              <span class="editorial-volume">VOL. IV · ISSUE 07</span>
+              <span class="editorial-stars">✦ ✦ ✦</span>
+              <span class="editorial-folio">EXPERIENCE SALON</span>
+            </div>
+            <div class="editorial-card-image-wrap">
+              <img src="hero-composition.svg" alt="Atmospheric candlelit dining and bespoke event design" class="editorial-hero-svg" />
+            </div>
+            <div class="editorial-card-footer">
+              <div class="editorial-quote-mark">“</div>
+              <div class="editorial-caption-body">
+                <strong>CURATED SPATIAL DIRECTION</strong>
+                <span>Lighting · Artisanal ceramics · Bespoke palette · Immersive dining</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREATIVE BRIEF FORM SECTION -->
+    <section class="form-section container" id="form-section" aria-labelledby="form-heading">
+      <div class="form-editorial-grid">
+        
+        <!-- Main Form Card -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <span class="form-pretitle">BESPOKE BRIEF</span>
+            <h2 class="form-card-title" id="form-heading">Describe Your Idea</h2>
+            <p class="form-card-subtitle">Be as descriptive or as vague as you like — we'll help shape it.</p>
+          </div>
+
+          <form id="idea-form" onsubmit="submitIdea(event)" novalidate>
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label" for="idea-input">What are you planning? <span class="required">*</span></label>
+                <div class="char-count"><span id="char-count">0</span> / 2000</div>
+              </div>
+              <textarea id="idea-input" class="form-textarea" rows="5"
+                placeholder="e.g. I want to plan a romantic birthday dinner for my boyfriend. Budget is ₦80,000. I want it to feel intimate, elegant, and thoughtful — not cheesy at all."
+                required aria-required="true" maxlength="2000" oninput="updateCharCount()"></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="budget-input">Budget</label>
+                <input type="text" id="budget-input" class="form-input" placeholder="e.g. ₦80,000 or $200" />
+                <span class="form-input-hint">Specify currency (NGN, USD, GBP, EUR)</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="style-input">Preferred Style / Vibe</label>
+                <input type="text" id="style-input" class="form-input"
+                  placeholder="e.g. Elegant, minimalist, warm candlelight, colourful…" />
+                <span class="form-input-hint">Keywords, moods, or cultural influences</span>
+              </div>
+            </div>
+
+            <!-- Elevated Category Selector -->
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <div class="category-chips category-selector" role="group" aria-label="Select a category">
+                <button type="button" class="chip chip-active" data-value="birthday" onclick="selectCategory(this)">
+                  <span class="chip-icon">🎂</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Birthday</span>
+                    <span class="chip-sub">Celebration</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="chip" data-value="romantic" onclick="selectCategory(this)">
+                  <span class="chip-icon">💌</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Romantic</span>
+                    <span class="chip-sub">Intimate Dinner</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="chip" data-value="surprise" onclick="selectCategory(this)">
+                  <span class="chip-icon">🎉</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Surprise</span>
+                    <span class="chip-sub">Party &amp; Reveal</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="chip" data-value="gathering" onclick="selectCategory(this)">
+                  <span class="chip-icon">🥂</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Gathering</span>
+                    <span class="chip-sub">Salon &amp; Soirée</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="chip" data-value="photoshoot" onclick="selectCategory(this)">
+                  <span class="chip-icon">📸</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Photoshoot</span>
+                    <span class="chip-sub">Editorial &amp; Lookbook</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+                <button type="button" class="chip" data-value="personal" onclick="selectCategory(this)">
+                  <span class="chip-icon">✨</span>
+                  <span class="chip-content">
+                    <span class="chip-name">Personal Project</span>
+                    <span class="chip-sub">Bespoke Concept</span>
+                  </span>
+                  <span class="chip-check" aria-hidden="true">✓</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Primary Action Button -->
+            <button type="submit" class="btn-cta" id="submit-btn">
+              <span class="btn-cta-text">Bring My Idea to Life</span>
+              <span class="btn-cta-icon">✦</span>
+            </button>
+
+            <!-- API warning alert -->
+            <div class="api-warning" id="home-api-warning" style="display:none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span>No API key configured yet. <button type="button" class="link-btn" onclick="toggleSettings()">Add your free Gemini or Claude key</button> to unlock live generation, or <button type="button" class="link-btn" onclick="loadSampleConcept()">explore an interactive sample concept</button>.</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- Curated Suggestions Sidebar -->
+        <div class="suggestions" aria-label="Prompt suggestions">
+          <div class="suggestions-header">
+            <span class="suggestions-sparkle">✦</span>
+            <p class="suggestions-label">Try One of These Ideas</p>
+          </div>
+          <div class="suggestion-cards">
+            
+            <button type="button" class="suggestion-card" onclick="fillSuggestion(0)">
+              <div class="suggestion-top-row">
+                <span class="suggestion-category-tag">ROMANTIC · ₦60,000</span>
+                <span class="suggestion-emoji">💌</span>
+              </div>
+              <p class="suggestion-text">“Romantic anniversary dinner for two, budget ₦60,000, intimate and non-cheesy.”</p>
+              <span class="suggestion-apply-action">Use this brief →</span>
+            </button>
+
+            <button type="button" class="suggestion-card" onclick="fillSuggestion(1)">
+              <div class="suggestion-top-row">
+                <span class="suggestion-category-tag">SURPRISE · ₦120,000</span>
+                <span class="suggestion-emoji">🎂</span>
+              </div>
+              <p class="suggestion-text">“Surprise 30th birthday party for my best friend who loves art and vintage aesthetics, ₦120,000.”</p>
+              <span class="suggestion-apply-action">Use this brief →</span>
+            </button>
+
+            <button type="button" class="suggestion-card" onclick="fillSuggestion(2)">
+              <div class="suggestion-top-row">
+                <span class="suggestion-category-tag">PHOTOSHOOT · EDITORIAL</span>
+                <span class="suggestion-emoji">📸</span>
+              </div>
+              <p class="suggestion-text">“Outdoor photoshoot concept for a small fashion brand, moody editorial feel, low budget.”</p>
+              <span class="suggestion-apply-action">Use this brief →</span>
+            </button>
+
+            <button type="button" class="suggestion-card" onclick="fillSuggestion(3)">
+              <div class="suggestion-top-row">
+                <span class="suggestion-category-tag">DINNER SALON · ₦80,000</span>
+                <span class="suggestion-emoji">🥂</span>
+              </div>
+              <p class="suggestion-text">“Intimate dinner party for 8 friends, sophisticated but fun, African-inspired aesthetic.”</p>
+              <span class="suggestion-apply-action">Use this brief →</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE: BRIEF REVIEW -->
+  <main id="page-brief" class="page" aria-label="Creative Brief Review" style="display:none">
+    <div class="container page-brief-inner">
+      <div class="page-header">
+        <button class="btn-back" onclick="showPage('home')" aria-label="Go back">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Back to Edit
+        </button>
+        <div class="page-title-block">
+          <div class="page-badge">✦ Creative Brief Review</div>
+          <h1 class="page-title">Here's what we understood</h1>
+          <p class="page-subtitle">Review your brief and adjust anything before our Creative Director crafts your complete concept.</p>
+        </div>
+      </div>
+
+      <div class="brief-grid" id="brief-grid"></div>
+
+      <div class="brief-edit-section">
+        <label class="form-label" for="brief-edit-input">Adjust or add details (optional)</label>
+        <textarea id="brief-edit-input" class="form-textarea" rows="3"
+          placeholder="e.g. He is allergic to flowers. The venue is an apartment rooftop. We prefer ambient acoustic music and candlelight."></textarea>
+      </div>
+
+      <!-- SPEED / ENGINE TOGGLE -->
+      <div class="engine-selector-card">
+        <div class="engine-selector-header">
+          <div>
+            <span class="engine-pretitle">MODEL PREFERENCE</span>
+            <span class="engine-selector-title">Creative Director Engine &amp; Speed</span>
+          </div>
+          <span class="engine-badge" id="engine-badge">⚡ Turbo Mode</span>
+        </div>
+        <div class="engine-options">
+          <button type="button" class="engine-btn active" id="btn-mode-turbo" onclick="setGenerationMode('turbo')">
+            <div class="engine-btn-icon">⚡</div>
+            <div class="engine-btn-info">
+              <div class="engine-btn-name">Turbo Mode</div>
+              <div class="engine-btn-desc">Blazing fast (3–5s) · Claude Haiku / Gemini Flash · Smart &amp; efficient</div>
+            </div>
+          </button>
+          <button type="button" class="engine-btn" id="btn-mode-director" onclick="setGenerationMode('director')">
+            <div class="engine-btn-icon">✦</div>
+            <div class="engine-btn-info">
+              <div class="engine-btn-name">Director Mode</div>
+              <div class="engine-btn-desc">Deep polish (10–15s) · Claude Sonnet / Gemini Pro · High luxury</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="brief-actions">
+        <button class="btn-cta" id="generate-btn" onclick="generateConcept()">
+          <span class="btn-cta-text">Generate Creative Concept</span>
+          <span class="btn-cta-icon">✦</span>
+        </button>
+        <button type="button" class="btn-secondary" onclick="loadSampleConcept()">
+          <span>✦ Explore Sample Concept</span>
+        </button>
+        <button class="btn-ghost" onclick="showPage('home')">Start Over</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE: CONCEPT (RESULTS) -->
+  <main id="page-concept" class="page" aria-label="Creative Concept Results" style="display:none">
+    <div class="container page-concept-inner">
+
+      <!-- Loading state -->
+      <div class="loading-state" id="loading-state">
+        <div class="loading-animation">
+          <div class="loading-orb"></div>
+          <div class="loading-orb loading-orb-2"></div>
+          <div class="loading-orb loading-orb-3"></div>
+        </div>
+        <p class="loading-title">Your Creative Director is at work…</p>
+        <p class="loading-subtitle" id="loading-subtitle">Initializing creative engine…</p>
+        
+        <div class="loading-steps-track" id="loading-steps-track">
+          <div class="loading-step-item active" id="load-step-1">
+            <span class="step-check">✦</span>
+            <span class="step-label">Analyzing brief &amp; moodboard vision</span>
+          </div>
+          <div class="loading-step-item" id="load-step-2">
+            <span class="step-check">○</span>
+            <span class="step-label">Curating bespoke color palette &amp; sensory details</span>
+          </div>
+          <div class="loading-step-item" id="load-step-3">
+            <span class="step-check">○</span>
+            <span class="step-label">Structuring itemized budget &amp; vendor list</span>
+          </div>
+          <div class="loading-step-item" id="load-step-4">
+            <span class="step-check">○</span>
+            <span class="step-label">Finalizing timeline &amp; execution plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div class="error-state" id="error-state" style="display:none">
+        <div class="error-icon">⚠</div>
+        <h2 class="error-title">Something went wrong</h2>
+        <p class="error-message" id="error-message">We couldn't generate your concept. Please try again.</p>
+        <div class="error-actions">
+          <button class="btn-cta" onclick="generateConcept()">Try Again</button>
+          <button class="btn-secondary" onclick="toggleSettings()">Update API Key</button>
+          <button class="btn-ghost" onclick="showPage('brief')">Edit Brief</button>
+        </div>
+      </div>
+
+      <!-- Results Proposal View -->
+      <div class="concept-results" id="concept-results" style="display:none">
+        
+        <!-- Proposal Header -->
+        <div class="concept-header">
+          <div class="concept-nav-row">
+            <button class="btn-back" onclick="showPage('brief')" aria-label="Go back to brief">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+              Adjust Brief
+            </button>
+            <div class="concept-header-actions">
+              <button class="btn-secondary" onclick="showFinalPlan()">
+                <span>View Final Plan Proposal</span>
+                <span>→</span>
+              </button>
+              <button class="btn-ghost" onclick="showPage('home')">New Project</button>
+            </div>
+          </div>
+
+          <div class="concept-title-block">
+            <div class="concept-badge-row">
+              <div class="page-badge">✦ BESPOKE CREATIVE PROPOSAL</div>
+              <div class="proposal-number-badge">DOCUMENT N° 082</div>
+            </div>
+            <h1 class="concept-name" id="concept-name">Loading…</h1>
+            <p class="concept-tagline" id="concept-tagline"></p>
+          </div>
+        </div>
+
+        <!-- Rendered Sections -->
+        <div class="concept-sections" id="concept-sections"></div>
+
+        <!-- Refinement Section -->
+        <div class="refinement-section" id="refinement-section">
+          <div class="refinement-card">
+            <div class="refinement-header">
+              <span class="refinement-badge">✦ Refine</span>
+              <h2 class="refinement-title">Want to change something?</h2>
+            </div>
+            <p class="refinement-hint">Ask your Creative Director to adjust the vibe, budget, styling, or elements of the concept.</p>
+            <div class="refinement-examples">
+              <button class="refinement-chip" onclick="fillRefinement(this)">Make it more modern</button>
+              <button class="refinement-chip" onclick="fillRefinement(this)">Reduce the budget</button>
+              <button class="refinement-chip" onclick="fillRefinement(this)">More colourful</button>
+              <button class="refinement-chip" onclick="fillRefinement(this)">More unconventional</button>
+              <button class="refinement-chip" onclick="fillRefinement(this)">Remove flowers</button>
+              <button class="refinement-chip" onclick="fillRefinement(this)">Add a signature cocktail</button>
+            </div>
+            <div class="refinement-input-row">
+              <textarea id="refinement-input" class="form-textarea refinement-textarea" rows="2"
+                placeholder="e.g. Make it more modern, reduce the budget to ₦50,000…"></textarea>
+              <button class="btn-refine" id="refine-btn" onclick="refineConceptHandler()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+                Refine
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Refinement loading overlay -->
+        <div class="refine-loading" id="refine-loading" style="display:none">
+          <div class="refine-loading-inner">
+            <div class="loading-animation loading-animation-sm">
+              <div class="loading-orb"></div>
+              <div class="loading-orb loading-orb-2"></div>
+              <div class="loading-orb loading-orb-3"></div>
+            </div>
+            <p>Refining your creative concept…</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE: FINAL PLAN -->
+  <main id="page-final" class="page" aria-label="Final Plan" style="display:none">
+    <div class="container page-final-inner">
+      <div class="page-header no-print">
+        <button class="btn-back" onclick="showPage('concept')" aria-label="Go back to concept">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Back to Concept
+        </button>
+        <div class="page-title-block">
+          <div class="page-badge">✦ Final Creative Dossier</div>
+          <h1 class="page-title" id="final-plan-title">Your Creative Plan</h1>
+          <p class="page-subtitle">A comprehensive creative direction dossier, structured for immediate execution or presentation.</p>
+        </div>
+        <div class="final-actions">
+          <button class="btn-secondary" onclick="copyPlan()" id="copy-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy Plan
+          </button>
+          <button class="btn-secondary" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9" />
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <rect x="6" y="14" width="12" height="8" />
+            </svg>
+            Print / Save PDF
+          </button>
+        </div>
+      </div>
+      <div class="final-plan-content" id="final-plan-content"></div>
+    </div>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="app.js?v=5"></script>
+</body>
+
+</html>
